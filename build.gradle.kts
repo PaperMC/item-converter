@@ -28,7 +28,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-configurations.implementation {
+configurations.runtimeOnly {
     extendsFrom(configurations.mojangMappedServerRuntime.get())
 }
 configurations.configureEach {
