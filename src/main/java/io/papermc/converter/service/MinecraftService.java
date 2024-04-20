@@ -16,4 +16,8 @@ public final class MinecraftService {
 		Bootstrap.bootStrap();
 		LOGGER.info("Minecraft bootstrapped!");
 	}
+
+	public String upgradeCommand(final String input) {
+		return "Soon:tm: - " + input; // TODO
+	}
 }

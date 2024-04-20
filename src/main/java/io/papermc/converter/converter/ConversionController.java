@@ -1,14 +1,20 @@
 package io.papermc.converter.converter;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import io.papermc.converter.service.MinecraftService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public final class ConversionController {
+    private final MinecraftService minecraftService;
 
-    @GetMapping("/convert")
-    public String convert(final String input) {
-        System.out.println(input);
-        return "Hello!";
+    public ConversionController(final MinecraftService minecraftService) {
+        this.minecraftService = minecraftService;
+    }
+
+    @PostMapping(value = "/convert", consumes = "text/plain", produces = "text/plain")
+    public String convert(@RequestBody final String inputText) {
+        return minecraftService.upgradeCommand(inputText);
     }
 }
