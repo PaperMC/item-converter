@@ -1,0 +1,4 @@
+application:
+  allowed-origins:
+    - http://localhost
+    - https://kennytv.eu
