@@ -24,5 +24,7 @@ jobs:
           check-latest: true
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+      - name: Prepare workspace
+        run: ./gradlew prepareWorkspace --stacktrace
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
