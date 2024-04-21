@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 import java.util.jar.JarFile
 import kotlin.io.path.absolute
 
@@ -103,6 +104,17 @@ tasks.bootJar {
             }
     })
     classpath = cp
+}
+
+project.tasks.register("fatBootJar", BootJar::class) {
+    archiveClassifier.set("fat")
+    classpath(sourceSets.main.get().runtimeClasspath
+        .minus(configurations.developmentOnly.get().minus(configurations.productionRuntimeClasspath.get()))
+        .minus(configurations.testAndDevelopmentOnly.get().minus(configurations.productionRuntimeClasspath.get()))
+        .filter(JarTypeFileSpec()))
+    mainClass.convention(tasks.bootJar.flatMap { it.mainClass })
+    targetJavaVersion.convention(tasks.bootJar.flatMap { it.targetJavaVersion })
+    resolvedArtifacts(configurations.runtimeClasspath.get().incoming.artifacts.resolvedArtifacts)
 }
 
 // copied from spring boot plugin
