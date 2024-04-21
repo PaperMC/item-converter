@@ -11,41 +11,41 @@ import org.springframework.stereotype.Service;
 
 @Service
 public final class MinecraftService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(MinecraftService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinecraftService.class);
 
-	private final CommandArgumentUpgrader upgrader;
+    private final CommandArgumentUpgrader upgrader;
 
-	public MinecraftService() {
-		LOGGER.info("Bootstrapping Minecraft...");
-		SharedConstants.tryDetectVersion();
-		Bootstrap.bootStrap();
-		LOGGER.info("Minecraft bootstrapped!");
+    public MinecraftService() {
+        LOGGER.info("Bootstrapping Minecraft...");
+        SharedConstants.tryDetectVersion();
+        Bootstrap.bootStrap();
+        LOGGER.info("Minecraft bootstrapped!");
 
-		LOGGER.info("Creating CommandArgumentUpgrader...");
-		this.upgrader = CommandArgumentUpgrader.upgrader_1_20_4_to_1_20_5(2);
-		LOGGER.info("CommandArgumentUpgrader created.");
-	}
+        LOGGER.info("Creating CommandArgumentUpgrader...");
+        this.upgrader = CommandArgumentUpgrader.upgrader_1_20_4_to_1_20_5(2);
+        LOGGER.info("CommandArgumentUpgrader created.");
+    }
 
-	public String upgradeCommand(final String input) {
-		LOGGER.debug("Upgrading command '{}'", input);
-		// We do a startsWith check because we aren't supporting WorldEdit style commands
-		// and want to support leading '/' or no leading '/'
-		final String upgraded = this.upgrader.upgradeCommandArguments(input, input.startsWith("/"));
-		LOGGER.debug("Upgraded command '{}' -> '{}'", input, upgraded);
-		return upgraded;
-	}
+    public String upgradeCommand(final String input) {
+        LOGGER.debug("Upgrading command '{}'", input);
+        // We do a startsWith check because we aren't supporting WorldEdit style commands
+        // and want to support leading '/' or no leading '/'
+        final String upgraded = this.upgrader.upgradeCommandArguments(input, input.startsWith("/"));
+        LOGGER.debug("Upgraded command '{}' -> '{}'", input, upgraded);
+        return upgraded;
+    }
 
-	public String upgradeItemArgument(final String input) {
-		LOGGER.debug("Upgrading item argument '{}'", input);
-		final String upgraded = this.upgrader.upgradeSingleArgument(ItemArgument::item, input);
-		LOGGER.debug("Upgraded item argument '{}' -> '{}'", input, upgraded);
-		return upgraded;
-	}
+    public String upgradeItemArgument(final String input) {
+        LOGGER.debug("Upgrading item argument '{}'", input);
+        final String upgraded = this.upgrader.upgradeSingleArgument(ItemArgument::item, input);
+        LOGGER.debug("Upgraded item argument '{}' -> '{}'", input, upgraded);
+        return upgraded;
+    }
 
-	public String upgradeComponentArgument(final String input) {
-		LOGGER.debug("Upgrading component argument '{}'", input);
-		final String upgraded = this.upgrader.upgradeSingleArgument(ComponentArgument::textComponent, input);
-		LOGGER.debug("Upgraded component argument '{}' -> '{}'", input, upgraded);
-		return upgraded;
-	}
+    public String upgradeComponentArgument(final String input) {
+        LOGGER.debug("Upgrading component argument '{}'", input);
+        final String upgraded = this.upgrader.upgradeSingleArgument(ComponentArgument::textComponent, input);
+        LOGGER.debug("Upgraded component argument '{}' -> '{}'", input, upgraded);
+        return upgraded;
+    }
 }

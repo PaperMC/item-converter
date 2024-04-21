@@ -1,4 +1,3 @@
-
 package io.papermc.converter.config;
 
 import java.util.List;
