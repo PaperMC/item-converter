@@ -85,7 +85,7 @@ public final class MinecraftRuntime {
             }
             Files.createDirectories(dataconverterPath.getParent());
             try (final InputStream in = dataconverterUrl.openConnection().getInputStream()) {
-                Files.copy(in, dataconverterPath);
+                Files.copy(in, dataconverterPath, StandardCopyOption.REPLACE_EXISTING);
             }
             try (final FileSystem zipFs = FileSystems.newFileSystem(URI.create("jar:" + unpackedZip.toUri()), Map.of())) {
                 final Path root = zipFs.getPath("/");
