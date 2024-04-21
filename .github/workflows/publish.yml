@@ -30,4 +30,4 @@ jobs:
       - name: Prepare workspace
         run: ./gradlew prepareWorkspace --stacktrace
       - name: Build with Gradle
-        run: ./gradlew jib --stacktrace
+        run: ./gradlew jib -Djib.console=plain --stacktrace
