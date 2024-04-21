@@ -3,6 +3,8 @@ application:
     - http://localhost:63342
     - https://kennytv.eu
     - https://item-converter.papermc.io
+    - http://localhost:3000
+    - https://docs.papermc.io
   max-input-length: 32767
 management:
   server:
