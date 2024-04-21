@@ -2,6 +2,7 @@ package io.papermc.converter.converter;
 
 import io.papermc.converter.config.ApplicationConfig;
 import io.papermc.converter.service.MinecraftService;
+import io.papermc.converter.service.MinecraftServiceWrapper;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public final class ConversionController {
     private final ApplicationConfig config;
 
     @Autowired
-    public ConversionController(final MinecraftService minecraftService, final ApplicationConfig config) {
+    public ConversionController(final MinecraftServiceWrapper minecraftService, final ApplicationConfig config) {
         this.minecraftService = minecraftService;
         this.config = config;
     }

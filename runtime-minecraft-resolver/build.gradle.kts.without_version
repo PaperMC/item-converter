@@ -1,0 +1,34 @@
+import org.spongepowered.gradle.vanilla.repository.MinecraftPlatform
+
+plugins {
+    java
+    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven("https://repo.papermc.io/repository/maven-public/")
+}
+
+configurations.configureEach {
+    isTransitive = false
+}
+
+tasks.register("writeMcPath") {
+    doFirst {
+        file("mc-jar-path.txt").writeText(
+            configurations.runtimeClasspath.get().singleFile.absolutePath
+        )
+    }
+    inputs.files(configurations.runtimeClasspath)
+}
+
+minecraft {
+    platform(MinecraftPlatform.SERVER)
+}
