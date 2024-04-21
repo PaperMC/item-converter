@@ -6,7 +6,6 @@ plugins {
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
-    id("com.google.cloud.tools.jib") version "3.4.2"
 }
 
 group = "io.papermc"
@@ -133,8 +132,3 @@ configurations.configureEach {
     exclude(group = "commons-logging", module = "commons-logging")
 }
 
-jib {
-    to {
-        image = "ghcr.io/papermc/item-converter"
-    }
-}

@@ -32,4 +32,9 @@ jobs:
       - name: Prepare workspace
         run: ./gradlew prepareWorkspace --stacktrace
       - name: Build with Gradle
-        run: ./gradlew jib -Djib.console=plain --stacktrace
+        run: ./gradlew bootJar --stacktrace
+      - name: Publish Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/papermc/item-converter:latest
