@@ -1,4 +1,5 @@
 application:
   allowed-origins:
-    - http://localhost
+    - http://localhost:63342
     - https://kennytv.eu
+  max-input-length: 32767
