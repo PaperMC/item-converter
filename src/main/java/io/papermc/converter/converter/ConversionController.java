@@ -15,8 +15,13 @@ public final class ConversionController {
         this.minecraftService = minecraftService;
     }
 
-    @PostMapping(value = "/convert", consumes = "text/plain", produces = "text/plain")
-    public String convert(@RequestBody final String inputText) {
+    @PostMapping(value = "/convert_command", consumes = "text/plain", produces = "text/plain")
+    public String convertCommand(@RequestBody final String inputText) {
         return minecraftService.upgradeCommand(inputText);
+    }
+
+    @PostMapping(value = "/convert_item_argument", consumes = "text/plain", produces = "text/plain")
+    public String convertItemArgument(@RequestBody final String inputText) {
+        return minecraftService.upgradeItemArgument(inputText);
     }
 }

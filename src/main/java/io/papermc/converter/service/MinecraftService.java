@@ -2,6 +2,7 @@ package io.papermc.converter.service;
 
 import ca.spottedleaf.dataconverter.util.CommandArgumentUpgrader;
 import net.minecraft.SharedConstants;
+import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.server.Bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,13 @@ public final class MinecraftService {
 		// and want to support leading '/' or no leading '/'
 		final String upgraded = this.upgrader.upgradeCommandArguments(input, input.startsWith("/"));
 		LOGGER.debug("Upgraded command '{}' -> '{}'", input, upgraded);
+		return upgraded;
+	}
+
+	public String upgradeItemArgument(final String input) {
+		LOGGER.debug("Upgrading item argument '{}'", input);
+		final String upgraded = this.upgrader.upgradeSingleArgument(ItemArgument::item, input);
+		LOGGER.debug("Upgraded item argument '{}' -> '{}'", input, upgraded);
 		return upgraded;
 	}
 }
