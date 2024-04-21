@@ -13,6 +13,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -105,9 +108,23 @@ public final class MinecraftRuntime {
             } catch (final UncheckedIOException e) {
                 throw e.getCause();
             }
-            final Path gradlew = workDir.resolve("gradlew");
-            gradlew.toFile().setExecutable(true);
-            final Process proc = new ProcessBuilder("./gradlew", "writeMcPath", "--no-daemon")
+            final List<String> command = new ArrayList<>();
+            if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win")) {
+                final Path gradlew = workDir.resolve("gradlew.bat");
+                gradlew.toFile().setExecutable(true);
+
+                command.add("cmd");
+                command.add("/c");
+                command.add(gradlew.toAbsolutePath().toString());
+            } else {
+                final Path gradlew = workDir.resolve("gradlew");
+                gradlew.toFile().setExecutable(true);
+
+                command.add("./gradlew");
+            }
+            command.add("writeMcPath");
+            command.add("--no-daemon");
+            final Process proc = new ProcessBuilder(command)
                 .directory(workDir.toFile())
                 .redirectErrorStream(true)
                 .start();
