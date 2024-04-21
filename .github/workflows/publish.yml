@@ -36,5 +36,6 @@ jobs:
       - name: Publish Docker image
         uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           tags: ghcr.io/papermc/item-converter:latest
