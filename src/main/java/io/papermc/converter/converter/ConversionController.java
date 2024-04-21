@@ -17,11 +17,11 @@ public final class ConversionController {
 
     @PostMapping(value = "/convert_command", consumes = "text/plain", produces = "text/plain")
     public String convertCommand(@RequestBody final String inputText) {
-        return minecraftService.upgradeCommand(inputText);
+        return minecraftService.upgradeCommand(inputText.trim());
     }
 
     @PostMapping(value = "/convert_item_argument", consumes = "text/plain", produces = "text/plain")
     public String convertItemArgument(@RequestBody final String inputText) {
-        return minecraftService.upgradeItemArgument(inputText);
+        return minecraftService.upgradeItemArgument(inputText.trim());
     }
 }
