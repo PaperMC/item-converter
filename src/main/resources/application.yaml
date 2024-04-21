@@ -3,3 +3,11 @@ application:
     - http://localhost:63342
     - https://kennytv.eu
   max-input-length: 32767
+management:
+  server:
+    port: 8081
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
