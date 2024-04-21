@@ -22,6 +22,8 @@ jobs:
           distribution: 'temurin'
           java-version: 21
           check-latest: true
+      - name: Install DataConverter
+        run: ./installDataConverter.sh
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Prepare workspace
