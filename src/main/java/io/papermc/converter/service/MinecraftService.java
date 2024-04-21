@@ -2,6 +2,7 @@ package io.papermc.converter.service;
 
 import ca.spottedleaf.dataconverter.util.CommandArgumentUpgrader;
 import net.minecraft.SharedConstants;
+import net.minecraft.commands.arguments.ComponentArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.server.Bootstrap;
 import org.slf4j.Logger;
@@ -38,6 +39,13 @@ public final class MinecraftService {
 		LOGGER.debug("Upgrading item argument '{}'", input);
 		final String upgraded = this.upgrader.upgradeSingleArgument(ItemArgument::item, input);
 		LOGGER.debug("Upgraded item argument '{}' -> '{}'", input, upgraded);
+		return upgraded;
+	}
+
+	public String upgradeComponentArgument(final String input) {
+		LOGGER.debug("Upgrading component argument '{}'", input);
+		final String upgraded = this.upgrader.upgradeSingleArgument(ComponentArgument::textComponent, input);
+		LOGGER.debug("Upgraded component argument '{}' -> '{}'", input, upgraded);
 		return upgraded;
 	}
 }
