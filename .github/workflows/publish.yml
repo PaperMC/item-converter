@@ -33,9 +33,12 @@ jobs:
         run: ./gradlew prepareWorkspace --stacktrace
       - name: Build with Gradle
         run: ./gradlew fatBootJar --stacktrace
-      - name: Generate timestamp
-        id: timestamp
-        run: echo "timestamp=$(date +%s)" >> "$GITHUB_OUTPUT"
+      - name: Generate tag
+        id: tag
+        run: |
+          ts=$(date +%s)
+          branch=${GITHUB_REF##*/}
+          echo "IMAGE_ID=${branch}-${GITHUB_SHA::8}-${ts}" >> "$GITHUB_OUTPUT"
       - name: Publish Docker image
         uses: docker/build-push-action@v5
         with:
@@ -43,4 +46,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/papermc/item-converter:latest
-            ghcr.io/papermc/item-converter:${{ steps.timestamp.outputs.timestamp }}
+            ghcr.io/papermc/item-converter:${{ steps.tag.outputs.IMAGE_ID }}
