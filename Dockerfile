@@ -4,7 +4,7 @@ RUN apk add --no-cache dumb-init
 
 ARG VERSION=0.0.1-SNAPSHOT
 
-COPY build/libs/item-converter-${VERSION}.jar /app/item-converter.jar
+COPY build/libs/item-converter-${VERSION}-fat.jar /app/item-converter.jar
 
 WORKDIR /app
 

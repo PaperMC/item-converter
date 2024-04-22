@@ -32,7 +32,7 @@ jobs:
       - name: Prepare workspace
         run: ./gradlew prepareWorkspace --stacktrace
       - name: Build with Gradle
-        run: ./gradlew bootJar --stacktrace
+        run: ./gradlew fatBootJar --stacktrace
       - name: Publish Docker image
         uses: docker/build-push-action@v5
         with:
