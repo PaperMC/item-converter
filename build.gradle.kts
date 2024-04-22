@@ -6,7 +6,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
-    id("org.spongepowered.gradle.vanilla") version "0.2.1-SNAPSHOT"
+    alias(libs.plugins.vanillagradle)
 }
 
 group = "io.papermc"
@@ -54,6 +54,9 @@ abstract class ProcessBuildFile : DefaultTask() {
     @get:Input
     abstract val mcVer: Property<String>
 
+    @get:Input
+    abstract val vgVersion: Property<String>
+
     @TaskAction
     fun run() {
         fsOps.delete {
@@ -67,6 +70,7 @@ abstract class ProcessBuildFile : DefaultTask() {
             into(out.get())
         }
         val buildFile = out.file("build.gradle.kts.without_version").get().asFile.readText()
+            .replace("VG_VERSION", vgVersion.get())
         out.file("build.gradle.kts").get().asFile.writeText(buildFile + "\nminecraft { version(\"${mcVer.get()}\") }\n")
     }
 }
@@ -75,6 +79,7 @@ val processBuildFile = tasks.register<ProcessBuildFile>("processBuildFile") {
     input.set(layout.projectDirectory.dir("runtime-minecraft-resolver"))
     out.set(layout.buildDirectory.dir("tmp/runtime-minecraft-resolver"))
     mcVer.set(mcVersion)
+    vgVersion.set(libs.versions.vanillagradle)
 }
 
 val zip = tasks.register<Zip>("zipMcRuntimeResolver") {
