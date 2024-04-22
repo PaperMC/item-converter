@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew fatBootJar --stacktrace
       - name: Generate timestamp
         id: timestamp
-        run: echo "timestamp=$(date +%s) >> $GITHUB_OUTPUT"
+        run: echo "timestamp=$(date +%s)" >> "$GITHUB_OUTPUT"
       - name: Publish Docker image
         uses: docker/build-push-action@v5
         with:
