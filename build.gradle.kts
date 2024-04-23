@@ -27,7 +27,7 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
-val mcVersion = "1.20.5-rc3"
+val mcVersion = "1.20.5"
 
 minecraft {
     version(mcVersion)
