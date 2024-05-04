@@ -1,6 +1,7 @@
 package io.papermc.converter.service;
 
 import ca.spottedleaf.dataconverter.minecraft.MCDataConverter;
+import ca.spottedleaf.dataconverter.minecraft.MCVersions;
 import ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry;
 import ca.spottedleaf.dataconverter.util.CommandArgumentUpgrader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -76,7 +77,7 @@ public final class MinecraftServiceImpl implements MinecraftService {
         final CompoundTag convertedTag = MCDataConverter.convertTag(
             MCTypeRegistry.ENTITY,
             tag,
-            3700, SharedConstants.getCurrentVersion().getDataVersion().getVersion()
+            MCVersions.V1_20_4, SharedConstants.getCurrentVersion().getDataVersion().getVersion()
         );
         convertedTag.remove("id");
 
