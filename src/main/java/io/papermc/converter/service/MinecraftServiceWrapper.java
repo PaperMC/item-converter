@@ -25,4 +25,9 @@ public final class MinecraftServiceWrapper implements MinecraftService {
     public String upgradeComponentArgument(final String input) {
         return this.impl.upgradeComponentArgument(input);
     }
+
+    @Override
+    public String upgradeEntity(final String entityType, final String nbt) {
+        return this.impl.upgradeEntity(entityType, nbt);
+    }
 }

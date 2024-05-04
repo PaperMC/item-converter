@@ -1,9 +1,17 @@
 package io.papermc.converter.service;
 
+import ca.spottedleaf.dataconverter.minecraft.MCDataConverter;
+import ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry;
 import ca.spottedleaf.dataconverter.util.CommandArgumentUpgrader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import java.util.ArrayList;
 import net.minecraft.SharedConstants;
 import net.minecraft.commands.arguments.ComponentArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.SnbtPrinterTagVisitor;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.Bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,5 +56,25 @@ public final class MinecraftServiceImpl implements MinecraftService {
         final String upgraded = this.upgrader.upgradeSingleArgument(ComponentArgument::textComponent, input);
         LOGGER.debug("Upgraded component argument '{}' -> '{}'", input, upgraded);
         return upgraded;
+    }
+
+    @Override
+    public String upgradeEntity(final String entityType, final String nbt) {
+        final ResourceLocation id;
+        final CompoundTag tag;
+        try {
+			id = new ResourceLocation(entityType);
+			tag = TagParser.parseTag(nbt);
+		} catch (final CommandSyntaxException e) {
+            return e.getMessage();
+        }
+        tag.putString("id", id.toString());
+        return new SnbtPrinterTagVisitor("", 0, new ArrayList<>()).visit(
+            MCDataConverter.convertTag(
+                MCTypeRegistry.ENTITY,
+                tag,
+                3700, SharedConstants.getCurrentVersion().getDataVersion().getVersion()
+            )
+        );
     }
 }
