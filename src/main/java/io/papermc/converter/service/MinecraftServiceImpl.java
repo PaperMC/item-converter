@@ -15,6 +15,7 @@ import net.minecraft.nbt.SnbtPrinterTagVisitor;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.world.entity.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,10 +64,14 @@ public final class MinecraftServiceImpl implements MinecraftService {
     @Override
     public String upgradeEntity(final String entityType, final String nbt) {
         LOGGER.debug("Upgrading entity; type: '{}', nbt: '{}'", entityType, nbt);
+        if (EntityType.byString(entityType).isEmpty()) {
+            return "Unknown entity type";
+        }
+
         final ResourceLocation id;
         final CompoundTag tag;
         try {
-            id = new ResourceLocation(entityType);
+            id = new ResourceLocation(entityType); // EntityType.byString already checks for validity, but let's be safe
             tag = TagParser.parseTag(nbt);
         } catch (final CommandSyntaxException | ResourceLocationException e) {
             LOGGER.debug("Exception upgrading entity; type: '{}', nbt: '{}'", entityType, nbt, e);

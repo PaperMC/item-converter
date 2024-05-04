@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,6 +30,11 @@ public final class ConversionController {
     @PostMapping(value = "/convert-item-argument", consumes = "text/plain", produces = "text/plain")
     public ResponseEntity<String> convertItemArgument(@RequestBody final String inputText) {
         return this.convertValidating(inputText, this.minecraftService::upgradeItemArgument);
+    }
+
+    @PostMapping(value = "/convert-entity-argument", consumes = "text/plain", produces = "text/plain")
+    public ResponseEntity<String> convertEntityArgument(@RequestParam final String entityType, @RequestBody final String inputText) {
+        return this.convertValidating(inputText, s -> this.minecraftService.upgradeEntity(entityType, s));
     }
 
     @PostMapping(value = "/convert-component-argument", consumes = "text/plain", produces = "text/plain")
