@@ -37,6 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-loader")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("jakarta.validation:jakarta.validation-api:3.1.0-M2")
     implementation(files("dataconverter.jar"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

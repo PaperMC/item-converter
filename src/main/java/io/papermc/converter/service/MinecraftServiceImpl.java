@@ -38,9 +38,19 @@ public final class MinecraftServiceImpl implements MinecraftService {
     @Override
     public String upgradeCommand(final String input) {
         LOGGER.debug("Upgrading command '{}'", input);
-        // We do a startsWith check because we aren't supporting WorldEdit style commands
+        if (input.length() < 10) {
+            return input;
+        }
+
+        final char c = input.charAt(0);
+        if (c == '#' || c == '$') {
+            // Function macros and comments that people might send over
+            return input;
+        }
+
+        // We do a leading slash check because we aren't supporting WorldEdit style commands
         // and want to support leading '/' or no leading '/'
-        final String upgraded = this.upgrader.upgradeCommandArguments(input, input.startsWith("/"));
+        final String upgraded = this.upgrader.upgradeCommandArguments(input, c == '/');
         LOGGER.debug("Upgraded command '{}' -> '{}'", input, upgraded);
         return upgraded;
     }
